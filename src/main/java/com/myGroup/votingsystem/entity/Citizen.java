@@ -51,6 +51,10 @@ public class Citizen {
 		this.id = id;
 		this.name = name;
 	}
+
+	public Citizen() {
+		super();
+	}
 	
 	
 }

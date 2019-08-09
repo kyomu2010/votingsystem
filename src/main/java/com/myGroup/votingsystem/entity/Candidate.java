@@ -51,6 +51,10 @@ public class Candidate {
 		this.id = id;
 		this.name = name;
 	}
+
+	public Candidate() {
+		super();
+	}
 	
 	
 }
