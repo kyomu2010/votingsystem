@@ -1,10 +1,10 @@
-package com.myCompany.votingsystem.entity;
+package com.myGroup.votingsystem.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Table(name="citizens")
+@Entity(name="citizens")
 public class Citizen {
 	
 	@Id
