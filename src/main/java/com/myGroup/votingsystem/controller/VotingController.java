@@ -10,7 +10,7 @@ import com.myGroup.votingsystem.repositories.CandidateRepo;
 import com.myGroup.votingsystem.repositories.CitizenRepo;
 
 @RestController
-public class Index {
+public class VotingController {
 	
 	@Autowired
 	CitizenRepo citizenRepo;
