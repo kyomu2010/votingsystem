@@ -1,15 +1,22 @@
 package com.myGroup.votingsystem.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myGroup.votingsystem.entity.Candidate;
 import com.myGroup.votingsystem.entity.Citizen;
 import com.myGroup.votingsystem.repositories.CandidateRepo;
 import com.myGroup.votingsystem.repositories.CitizenRepo;
 
-@RestController
+@Controller
 public class VotingController {
 	
 	@Autowired
@@ -18,15 +25,40 @@ public class VotingController {
 	@Autowired
 	CandidateRepo candidateRepo;
 	
-	@RequestMapping("/doAction")
-	public String doAction() {
-		Citizen citizen = new Citizen((long)1, "Bob");
-		citizenRepo.save(citizen);
+	@RequestMapping("/")
+	public String goToVote() {
+		return "vote.html";
+	}
+	
+	@RequestMapping("/doLogin")
+	public String doLogin(@RequestParam String name, Model model, HttpSession session) {
 		
-		Candidate candidate = new Candidate((long)1, "Dave");
-		candidateRepo.save(candidate);
+		Citizen citizen = citizenRepo.findByName(name);
 		
-		return "Success";
+		session.setAttribute("citizen", citizen);
 		
+		if(!citizen.getHasVoted()) {
+			List<Candidate> candidates = candidateRepo.findAll();
+			model.addAttribute("candidates", candidates);
+			return "/performVoted.html";
+		} else {
+				return "/alreadyVoted.html";
+		}
+			
+	}
+	
+	@RequestMapping("/voteFor")
+	public String voteFor(@RequestParam Long id, HttpSession session) {
+		Citizen cN = (Citizen)session.getAttribute("citizen");
+		
+		if(!cN.getHasVoted()) {
+			cN.setHasVoted(true);
+			Candidate c = candidateRepo.findById((long)id);
+			c.setNumberOfVotes(c.getNumberOfVotes()+1);
+			candidateRepo.save(c);
+			citizenRepo.save(cN);
+			return "voted.html";
+		}
+		return "alreadyVoted.html";
 	}
 }

@@ -41,6 +41,18 @@ public class Citizen {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Column(name="hasvoted")
+	private Boolean hasVoted;
+	
+
+	public Boolean getHasVoted() {
+		return hasVoted;
+	}
+
+	public void setHasVoted(Boolean hasVoted) {
+		this.hasVoted = hasVoted;
+	}
 
 	/**
 	 * @param id
@@ -55,6 +67,5 @@ public class Citizen {
 	public Citizen() {
 		super();
 	}
-	
 	
 }

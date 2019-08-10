@@ -41,6 +41,17 @@ public class Candidate {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Column(name="numberOfVotes")
+	private Integer numberOfVotes;
+	
+	public Integer getNumberOfVotes() {
+		return numberOfVotes;
+	}
+
+	public void setNumberOfVotes(Integer numberOfVotes) {
+		this.numberOfVotes = numberOfVotes;
+	}
 
 	/**
 	 * @param id
